@@ -1,0 +1,94 @@
+---
+title: "`r params$etudiant`"
+output: pdf_document
+params:
+  etudiant: "Noms"
+---
+
+Voici les évaluations fait par chaque professeur qui a assisté à votre présentation ainsi que leurs commentaires.
+
+À titre de rappel, les présentations sont évaluées selon les critères suivants :
+
+**Rigueur Scientifique (35%)**
+
+* Les concepts propres à la discipline sont bien maniés et s'appuient sur des bases théoriques et/ou expérimentales solides.
+* L’orateur fait preuve de bonnes capacités d'analyse : le traitement des données est approprié aux hypothèses.
+* Les conclusions sont dans les limites possibles de l’interprétation des résultats.
+
+**Pédagogie (35%)**
+
+* Le langage est précis, la voix est suffisamment forte et dynamique et le tempo est stimulant.
+* Le support audiovisuel est approprié et facilite la compréhension du projet de recherche; le lettrage est assez gros pour être lisible au fond de la salle; le texte est limité à l'essentiel et les tableaux et figures ne sont pas trop chargés.
+* L’orateur fait preuve de structure et d’organisation : le sujet et le contexte sont expliqués dans l'introduction; l'hypothèse et les objectifs sont bien définis.
+* Les méthodes et les résultats sont expliqués et interprétés clairement.
+* Les conclusions sont données et une perspective d’impact et/ou de travaux futurs est donnée.
+
+**Réponse aux questions (30%)**
+
+* On profite de l'occasion pour supplémenter l'information donnée au séminaire.
+* On supporte l'information donnée en citant des résultats et/ou la littérature.
+* On justifie et on élabore; on montre qu’on connaît le sujet d’étude et toutes ses ramifications.
+
+\newpage
+
+```{r, include=FALSE}
+library(tidyverse)
+# Lire évaluation
+dat <- readxl::read_xlsx(fichier, sheet = 1)
+
+# Nom d'étudiant
+etudiantList <- unique(dat$`Nom de l’étudiant.e qui présente`)
+
+# Nombre d'étudiants
+netudiant <- length(etudiant)
+
+# Nombre d'évaluation par étudiant
+neval <- summary(as.factor(dat$`Nom de l’étudiant.e qui présente`))
+```
+
+
+
+
+```{r echo = FALSE, results = "asis"}
+templateCommentaire <- "## Évaluateur : %s
+### Rigueur scientifique
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Pédagogie
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Réponse aux Questions
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+## Note finale
+
+### %s
+
+--------------
+
+"
+
+# Afficher les résultats
+  i <-  which(etudiantList == params$etudiant)
+  sel <- dat[which(dat$`Nom de l’étudiant.e qui présente` ==  etudiantList[i]),]
+  for(j in 1:nrow(sel)){
+    cat(sprintf(templateCommentaire, 
+               sel$`Nom de l’évaluateur/l’évaluatrice`[j],
+               sel$`Rigueur scientifique - Note`[j],
+               sel$`Rigueur scientifique - commentaires`[j],
+               sel$`Pédagogie - Note`[j],
+               sel$`Pédagogie - commentaires`[j],
+               sel$`Réponse aux questions - Note`[j],
+               sel$`Réponse aux questions - commentaires`[j],
+               sel$`Note finale attribuée`[j]))
+  }
+```
