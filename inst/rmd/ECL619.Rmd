@@ -1,0 +1,126 @@
+---
+title: "`r params$etudiant`"
+output: pdf_document
+params:
+  etudiant: "Noms"
+---
+
+Voici les évaluations fait par chaque professeur qui a assisté à votre présentation ainsi que leurs commentaires.
+
+À titre de rappel, les présentations sont évaluées selon les critères suivants :
+
+**Rigueur Scientifique (50%)**
+
+* Les concepts propres à la discipline sont bien maniés et s'appuient sur des bases théoriques et/ou expérimentales solides. 
+* L’orateur fait preuve de bonnes capacités d’analyse : le traitement des données est approprié aux hypothèses. 
+* Les conclusions sont dans les limites possibles de l’interprétation des résultats
+
+**Pédagogie (50%)**
+
+* Le langage est précis, la voix est suffisamment forte et dynamique et le tempo est stimulant. 
+* Le support audio-visuel est approprié et facilite la compréhension de projet de recherche; le lettrage est assez gros pour être lisible; le texte est limité à l’essentiel et les tableaux et figures ne sont pas trop chargés.
+* L’orateur fait preuve de structure et d’organisation : le sujet et le contexte sont expliqués dans l’introduction; l’hypothèse et les objectifs sont bien définis. 
+* Les méthodes et les résultats sont expliqués et interprétés clairement.
+*-* Les conclusions sont données et une perspective d’impact et/ou de travaux futurs est donnée
+
+**Réponse aux questions**
+
+* On profite de l’occasion pour supplémenter l’information donnée au séminaire. 
+* On supporte l’information donnée en citant résultats et/ou la littérature. 
+* On justifie et on élabore; on montre qu’on connait le sujet d’étude et toutes ses ramifications
+
+\newpage
+
+```{r, include=FALSE}
+library(tidyverse)
+
+# Nombre d'évaluation par étudiant
+neval <- summary(as.factor(dat$`Nom de l’étudiant.e qui présente`))
+```
+
+
+```{r echo = FALSE, results = "asis"}
+templateCommentaireEval <- "## Évaluateur : %s
+
+### Rigueur scientifique
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Pédagogie
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Réponse aux Questions 
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+## Note finale (Calculé à partir des notes précédentes)
+
+### %s
+
+--------------
+
+"
+
+templateCommentaireNoEval <- "
+### Rigueur scientifique
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Pédagogie
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Réponse aux Questions 
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+## Note finale (Calculé à partir des notes précédentes)
+
+### %s
+
+--------------
+
+"
+
+# Afficher les résultats
+  i <-  which(etudiant == params$etudiant)
+  sel <- dat[which(dat$`Nom de l’étudiant.e qui présente` ==  etudiant[i]),]
+  for(j in 1:nrow(sel)){
+    
+    # Avec évaluateur
+    if(evalu){
+    cat(sprintf(templateCommentaireEval, 
+               sel[j,3],
+               sel[j,4],
+               sel[j,5],
+               sel[j,6],
+               sel[j,7],
+               sel[j,8],
+               sel[j,9],
+               sel[j,10]))
+    }else{
+    # Sans évaluateur
+     cat(sprintf(templateCommentaireNoEval, 
+               sel[j,4],
+               sel[j,5],
+               sel[j,6],
+               sel[j,7],
+               sel[j,8],
+               sel[j,9],
+               sel[j,10]))
+    }
+  }
+```

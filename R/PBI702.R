@@ -1,4 +1,4 @@
-#' @title Production de rapports pour les cours PBI
+#' @title Production de rapports pour les cours PBI 702, PBI 706 et PBI 708 
 #'
 #' @description Produit des rapports individuels personnalisés pour chaque étudiant ayant été évalué pour les séminaires de recherche du département de biologie de l'Université de Sherbrooke.
 #'
@@ -26,7 +26,7 @@
 #' @importFrom rmarkdown render
 #' @importFrom purrr walk
 #' @importFrom glue glue
-rapport <- function(fichier, dossier = getwd()){
+PBI702 <- function(fichier, dossier = getwd()){
   # Lire évaluation
   dat <- readxl::read_xlsx(fichier, sheet = 1)
 
@@ -39,7 +39,7 @@ rapport <- function(fichier, dossier = getwd()){
   purrr::walk(
     .x = etudiant,
     ~ rmarkdown::render(
-      input = system.file("rmd", "index.Rmd", package = "PBIRapport"),
+      input = system.file("rmd", "PBI702.Rmd", package = "PBIRapport"),
       output_file = glue::glue("{.x} - Évaluation détaillée.pdf"),
       output_dir = dossier,
       params = list(etudiant = {.x})

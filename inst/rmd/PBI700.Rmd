@@ -1,0 +1,109 @@
+---
+title: "`r params$etudiant`"
+output: pdf_document
+params:
+  etudiant: "Noms"
+---
+
+Voici les évaluations fait par chaque professeur qui a assisté à votre présentation ainsi que leurs commentaires.
+
+À titre de rappel, les présentations sont évaluées selon les critères suivants :
+
+**Introduction et mise en contexte (10%)**
+
+* Les grandes questions du domaine de recherche sont présentées. 
+* L’importance scientifique, la raison d'être du projet, est présentée.
+
+**Rigueur Scientifique (15%)**
+
+* Les concepts propres à la discipline sont bien maniés et s'appuient sur des bases théoriques et/ou expérimentales solides.
+* Les approches méthodologiques semblent appropriées par rapport aux objectifs.
+* Les hypothèses et les objectifs sont clairement décrits.
+* L'orateur maîtrise le vocabulaire spécifique à son domaine.
+
+*Note : Certain professeurs n'étant pas spécialiste de votre discipline peuvent avoir décidé de répondre "Pas évalué" à cette question.*
+
+**Pédagogie (60%)**
+
+* Le langage est précis, la voix est suffisamment forte et dynamique et le tempo est stimulant.
+* Le support audiovisuel est approprié et facilite la compréhension du projet de recherche; le lettrage est assez gros pour être lisible au fond de la salle; le texte est limité à l'essentiel et les tableaux et figures ne sont pas trop chargés.
+* L’orateur fait preuve de structure et d’organisation : le sujet et le contexte sont expliqués dans l'introduction; l'hypothèse et les objectifs sont bien définis.
+* Les méthodes sont présentées de manière structurée, en relation avec les hypothèses et objectifs.
+
+**Réponse aux questions (15%)**
+
+* On profite de l'occasion pour bonifier l'information donnée pendant le séminaire.
+* On supporte l’information donnée en citant la littérature.
+* On justifie et on élabore; on montre qu’on connaît le sujet d’étude et toutes ses ramifications.
+* En bref, l'orateur montre que la question a bien été comprise et offre des réponses claires et précises.
+
+\newpage
+
+```{r, include=FALSE}
+library(tidyverse)
+
+# Nombre d'évaluation par étudiant
+neval <- summary(as.factor(dat$`Nom de l’étudiant.e qui présente`))
+```
+
+
+
+
+```{r echo = FALSE, results = "asis"}
+templateCommentaire <- "## Évaluateur : %s
+### Introduction et mise en contexte
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Rigueur scientifique
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Pédagogie
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+### Réponse aux Questions 
+#### Note : %s
+#### Commentaire : 
+
+%s
+
+## Note finale (Calculé à partir des notes précédentes)
+
+### %s
+
+--------------
+
+"
+
+# Afficher les résultats
+  i <-  which(etudiant == params$etudiant)
+  sel <- dat[which(dat$`Nom de l’étudiant.e qui présente` ==  etudiant[i]),]
+  for(j in 1:nrow(sel)){
+    
+    # Calcul de la note final
+    Note_finale <- sel$`Introduction et mise en contexte - Note`[j] * 0.1 +
+                   sel$`Rigueur scientifique - Note`[j] * 0.15 +
+                   sel$`Pédagogie - Note`[j] * 0.6 +
+                   sel$`Réponse aux questions - Note`[j] * 0.15
+      
+    cat(sprintf(templateCommentaire, 
+               sel$`Nom de l’évaluateur/l’évaluatrice`[j],
+               sel$`Introduction et mise en contexte - Note`[j],
+               sel$`Introduction et mise en contexte - Commentaires`[j],
+               sel$`Rigueur scientifique - Note`[j],
+               sel$`Rigueur scientifique - Commentaires`[j],
+               sel$`Pédagogie - Note`[j],
+               sel$`Pédagogie - Commentaires`[j],
+               sel$`Réponse aux questions - Note`[j],
+               sel$`Réponse aux questions - Commentaires`[j],
+               Note_finale))
+  }
+```

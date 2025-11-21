@@ -33,14 +33,6 @@ Voici les évaluations fait par chaque professeur qui a assisté à votre prése
 
 ```{r, include=FALSE}
 library(tidyverse)
-# Lire évaluation
-dat <- readxl::read_xlsx(fichier, sheet = 1)
-
-# Nom d'étudiant
-etudiantList <- unique(dat$`Nom de l’étudiant.e qui présente`)
-
-# Nombre d'étudiants
-netudiant <- length(etudiant)
 
 # Nombre d'évaluation par étudiant
 neval <- summary(as.factor(dat$`Nom de l’étudiant.e qui présente`))
@@ -78,8 +70,8 @@ templateCommentaire <- "## Évaluateur : %s
 "
 
 # Afficher les résultats
-  i <-  which(etudiantList == params$etudiant)
-  sel <- dat[which(dat$`Nom de l’étudiant.e qui présente` ==  etudiantList[i]),]
+  i <-  which(etudiant == params$etudiant)
+  sel <- dat[which(dat$`Nom de l’étudiant.e qui présente` ==  etudiant[i]),]
   for(j in 1:nrow(sel)){
     cat(sprintf(templateCommentaire, 
                sel$`Nom de l’évaluateur/l’évaluatrice`[j],
