@@ -4,7 +4,7 @@
 \alias{ECL619}
 \title{Production de rapports pour le cours ECL 619}
 \usage{
-ECL619(fichier, dossier = getwd(), evaluateurInclus = TRUE)
+ECL619(fichier, dossier = getwd(), evaluateurInclus = FALSE)
 }
 \arguments{
 \item{fichier}{Une suite de caractères définissant le chemin (et le nom) d'un fichier .xlsx qui a été généré automatiquement par un Google Form.}

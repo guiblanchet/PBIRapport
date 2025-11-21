@@ -26,7 +26,7 @@
 #' @importFrom rmarkdown render
 #' @importFrom purrr walk
 #' @importFrom glue glue
-ECL619 <- function(fichier, dossier = getwd(), evaluateurInclus = TRUE){
+ECL619 <- function(fichier, dossier = getwd(), evaluateurInclus = FALSE){
   # Lire évaluation
   dat <- readxl::read_xlsx(fichier, sheet = 1)
 
