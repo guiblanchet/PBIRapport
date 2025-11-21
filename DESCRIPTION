@@ -1,7 +1,7 @@
 Package: PBIRapport
 Type: Package
 Title: Construction de rapport pour les cours PBI à l'Université de Sherbrooke
-Version: 0.1.0
+Version: 0.3.0
 Author: F. Guillaume Blanchet
 Maintainer: F. Guillaume Blanchet <guillaume.blanchet@usherbrooke.ca>
 Description: Sert à constuire des rapports pour les cours PBI à l'Université de Sherbrooke 
