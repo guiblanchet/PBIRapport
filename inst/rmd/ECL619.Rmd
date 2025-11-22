@@ -9,13 +9,13 @@ Voici les évaluations fait par chaque professeur qui a assisté à votre prése
 
 À titre de rappel, les présentations sont évaluées selon les critères suivants :
 
-**Rigueur Scientifique (50%)**
+**Rigueur Scientifique (45%)**
 
 * Les concepts propres à la discipline sont bien maniés et s'appuient sur des bases théoriques et/ou expérimentales solides. 
 * L’orateur fait preuve de bonnes capacités d’analyse : le traitement des données est approprié aux hypothèses. 
 * Les conclusions sont dans les limites possibles de l’interprétation des résultats
 
-**Pédagogie (50%)**
+**Pédagogie (45%)**
 
 * Le langage est précis, la voix est suffisamment forte et dynamique et le tempo est stimulant. 
 * Le support audio-visuel est approprié et facilite la compréhension de projet de recherche; le lettrage est assez gros pour être lisible; le texte est limité à l’essentiel et les tableaux et figures ne sont pas trop chargés.
@@ -23,7 +23,7 @@ Voici les évaluations fait par chaque professeur qui a assisté à votre prése
 * Les méthodes et les résultats sont expliqués et interprétés clairement.
 *-* Les conclusions sont données et une perspective d’impact et/ou de travaux futurs est donnée
 
-**Réponse aux questions**
+**Réponse aux questions (10%)**
 
 * On profite de l’occasion pour supplémenter l’information donnée au séminaire. 
 * On supporte l’information donnée en citant résultats et/ou la littérature. 
