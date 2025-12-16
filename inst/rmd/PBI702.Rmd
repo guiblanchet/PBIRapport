@@ -71,16 +71,16 @@ templateCommentaire <- "## Évaluateur : %s
 
 # Afficher les résultats
   i <-  which(etudiant == params$etudiant)
-  sel <- dat[which(dat$`Nom de l’étudiant.e qui présente` ==  etudiant[i]),]
+  sel <- dat[which(dat[,2] ==  etudiant[i]),]
   for(j in 1:nrow(sel)){
     cat(sprintf(templateCommentaire, 
-               sel$`Nom de l’évaluateur/l’évaluatrice`[j],
-               sel$`Rigueur scientifique - Note`[j],
-               sel$`Rigueur scientifique - commentaires`[j],
-               sel$`Pédagogie - Note`[j],
-               sel$`Pédagogie - commentaires`[j],
-               sel$`Réponse aux questions - Note`[j],
-               sel$`Réponse aux questions - commentaires`[j],
-               sel$`Note finale attribuée`[j]))
+               sel[j,3],
+               sel[j,4],
+               sel[j,5],
+               sel[j,6],
+               sel[j,7],
+               sel[j,8],
+               sel[j,9],
+               sel[j,10]))
   }
 ```

@@ -89,10 +89,16 @@ templateCommentaire <- "## Évaluateur : %s
   for(j in 1:nrow(sel)){
     
     # Calcul de la note final
-    Note_finale <- sel$`Introduction et mise en contexte - Note`[j] * 0.1 +
-                   sel$`Rigueur scientifique - Note`[j] * 0.15 +
-                   sel$`Pédagogie - Note`[j] * 0.6 +
-                   sel$`Réponse aux questions - Note`[j] * 0.15
+    if(sel$`Rigueur scientifique - Note`[j] != "Pas évalué"){
+      Note_finale <- as.numeric(sel$`Introduction et mise en contexte - Note`[j]) * 0.1 +
+                     as.numeric(sel$`Rigueur scientifique - Note`[j]) * 0.15 +
+                     as.numeric(sel$`Pédagogie - Note`[j]) * 0.6 +
+                     as.numeric(sel$`Réponse aux questions - Note`[j]) * 0.15
+    }else{
+      Note_finale <- as.numeric(sel$`Introduction et mise en contexte - Note`[j]) * 0.15 +
+                     as.numeric(sel$`Pédagogie - Note`[j]) * 0.65 +
+                     as.numeric(sel$`Réponse aux questions - Note`[j]) * 0.2
+    }
       
     cat(sprintf(templateCommentaire, 
                sel$`Nom de l’évaluateur/l’évaluatrice`[j],

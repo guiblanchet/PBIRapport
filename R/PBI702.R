@@ -28,10 +28,10 @@
 #' @importFrom glue glue
 PBI702 <- function(fichier, dossier = getwd()){
   # Lire évaluation
-  dat <- readxl::read_xlsx(fichier, sheet = 1)
+  dat <- as.data.frame(readxl::read_xlsx(fichier, sheet = 1))
 
   # Nom d'étudiant
-  etudiant <- unique(dat$`Nom de l’étudiant.e qui présente`)
+  etudiant <- unique(dat[,2])
 
   # Nombre d'étudiants
   netudiant <- length(etudiant)
